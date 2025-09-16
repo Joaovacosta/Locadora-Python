@@ -1,6 +1,6 @@
-from classes import *
+from classes import item, Cliente
 
-locadora_python = locadora("Locadora Python", "Jundiaí")
+locadora_python = Locadora("Locadora Python", "Jundiaí")
 
 itens_locadora = [
     item("Ea Sports FC 25", "Livre", "Esportes", True),
@@ -37,3 +37,26 @@ def devolucao(nome_item):
             print(f'O item "{nome_item}" foi devolvido com sucesso!')
             return
     print(f'O item "{nome_item}" não foi encontrado na locadora.')
+    
+def alugar(cliente, lista_itens):
+    print("\nItens disponíveis para aluguel:")
+    for i, it in enumerate(lista_itens):
+        status = "Disponível" if it._item__disponivel else "Indisponível"
+        print(f"{i + 1}. {it._item__filme} ({status})")
+    
+    escolha = int(input("Escolha o número do item que deseja alugar: ")) - 1
+    
+    if 0 <= escolha < len(lista_itens):
+        selecionado = lista_itens[escolha]
+        if selecionado._item__disponivel:
+            selecionado.alugar()
+            cliente.setITlocado(selecionado)
+            print(f"{cliente.getNome()} agora possui '{selecionado._item__filme}' alugado.")
+        else:
+            print(f"Desculpe, '{selecionado._item__filme}' não está disponível.")
+    else:
+        print("Escolha inválida.")
+    
+def listar():
+    print("Jogos\n", itens_locadora)
+    print("Filmes\n", filmes_locadora)
